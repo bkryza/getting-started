@@ -2,20 +2,20 @@ version: '2.0'
 
 services:
   node1.oneprovider:
-    image: onedata/oneprovider:17.06.0-rc5
+    image: onedata/oneprovider:18.02.0-beta1
     hostname: node1.oneprovider.
     # dns: 8.8.8.8 # uncomment if container can't ping any domain
     container_name: oneprovider-1
     volumes:
         - "/var/run/docker.sock:/var/run/docker.sock"
         # configuration persistence
-        - "${ONEPROVIDER_CONFIG_DIR}:/volumes/persistence"
+        - "/opt/oneprovider/persistence:/volumes/persistence"
         # data persistence
-        - "${ONEPROVIDER_DATA_DIR}:/volumes/storage"
+        - "/opt/oneprovider/storage:/volumes/storage"
         # Server SSL certificates
-        #- "${OP_PRIV_KEY_PATH}:/etc/op_panel/certs/web_key.pem"
-        #- "${OP_CERT_PATH}:/etc/op_panel/certs/web_cert.pem"
-        #- "${OP_CHAIN_PATH}:/etc/op_panel/certs/web_chain.pem"
+        - "/etc/letsencrypt/live/${FQDN}/privkey.pem:/etc/op_panel/certs/web_key.pem"
+        - "/etc/letsencrypt/live/${FQDN}/cert.pem:/etc/op_panel/certs/web_cert.pem"
+        - "/etc/letsencrypt/live/${FQDN}/chain.pem:/etc/op_panel/certs/web_chain.pem"
         # Additional, trusted CA certificates (any filename is accepted)
         #- "${OP_CACERTS_PATH}:/etc/op_panel/cacerts/customCaBundle.pem"
     ports:
@@ -27,24 +27,6 @@ services:
       #ONEPANEL_DEBUG_MODE: "true" # prevents container exit on configuration error
       ONEPANEL_BATCH_MODE: "true"
       ONEPANEL_LOG_LEVEL: "none" # prints logs to stdout (possible values: none, debug, info, error), by default set to info
-      # Used for test purposes, disable when you have your own web cert mounted via volumes.
-      # Cert will be generated only if none is found under cert path.
-
-      # If enabled, a new web cert will be generated with CN matching the
-      #   ONEPANEL_GENERATED_CERT_DOMAIN and signed by OnedataTestWebServerCa
-      # NOTE: The generation will be performed upon every startup, any
-      #   existing certs will be backed up and placed in the same directory.
-      # WARNING: This functionality is devised for test purposes and must not
-      #   be used in production.
-      ONEPANEL_GENERATE_TEST_WEB_CERT: "true"  # default: false
-      # The generated test web cert will be issued for below domain.
-      ONEPANEL_GENERATED_CERT_DOMAIN: "node1.oneprovider"  # default: ""
-      # If enabled, onepanel will trust any server that has a cert signed by
-      #   the OnedataTestWebServerCa.
-      # WARNING: This functionality is devised for test purposes and must not
-      #   be used in production.
-      ONEPANEL_TRUST_TEST_CA: "true"  # default: false
-
       ONEPROVIDER_CONFIG: |
         cluster:
           domainName: "oneprovider."
@@ -79,8 +61,8 @@ services:
           # properly configured DNS zone delegation and external IP is needed.
           # This onezone setup is not covered by the getting-started scenarios.
           subdomainDelegation: false
-          domain: "${PROVIDER_FQDN}" # OR IP ADDRESS
-          adminEmail: "getting-started@onedata.org"
+          domain: "${FQDN}" # OR IP ADDRESS
+          adminEmail: "bkryza@gmail.com"
           geoLatitude: ${GEO_LATITUDE}
           geoLongitude: ${GEO_LONGITUDE}
         onezone:
