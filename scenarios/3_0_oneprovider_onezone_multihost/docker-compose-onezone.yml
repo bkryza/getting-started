@@ -13,9 +13,9 @@ services:
         # OpenId configuration
         - "/opt/onezone/auth.config:/var/lib/oz_worker/auth.config"
         # Server SSL certificates
-        - "/etc/letsencrypt/live/${FQDN}/privkey.pem:/etc/op_panel/certs/web_key.pem"
-        - "/etc/letsencrypt/live/${FQDN}/cert.pem:/etc/op_panel/certs/web_cert.pem"
-        - "/etc/letsencrypt/live/${FQDN}/chain.pem:/etc/op_panel/certs/web_chain.pem"
+        - "/etc/letsencrypt/live/${FQDN}/privkey.pem:/etc/oz_panel/certs/web_key.pem"
+        - "/etc/letsencrypt/live/${FQDN}/cert.pem:/etc/oz_panel/certs/web_cert.pem"
+        - "/etc/letsencrypt/live/${FQDN}/chain.pem:/etc/oz_panel/certs/web_chain.pem"
     ports:
       - "53:53"
       - "53:53/udp"
