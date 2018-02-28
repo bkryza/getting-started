@@ -42,7 +42,7 @@ services:
             nodes:
               - "n1"
           storages:
-            NFS:
+            LocalDisk:
               type: "posix"
               mountPoint: "/volumes/storage"
         oneprovider:
