@@ -1,7 +1,7 @@
 ## Setup packages
 
 ```
-yum install git wget curl
+yum install -y git wget curl vim
 curl -fsSL get.docker.com -o get-docker.sh
 bash ./get-docker.sh
 curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
@@ -14,7 +14,7 @@ systemctl start docker
 
 ### Centos
 ```
-sudo yum install certbot 
+sudo yum install -y certbot 
 sudo certbot certonly --standalone -d DOMAIN_NAME
 ```
 
@@ -38,10 +38,9 @@ git checkout rhea
 cd scenarios/3_0_oneprovider_onezone_multihost
 eval $(./setup_zone_env.sh BG_NAME)
 echo $ZONE_NAME # check if name is correct
-cp auth.config /opt/onezone/auth.config
-vim /opt/onezone/auth.config
+vi /opt/onezone/auth.config
 # Edit auth.config with proper realm URL and app_secret
-./run_onedata --provider --detach
+./run_onedata --zone --detach
 cat ~/.zone.password
 ```
 
