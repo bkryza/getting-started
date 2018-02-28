@@ -76,7 +76,7 @@ kit() {
 
 stfc() {
     echo "export PROVIDER_NAME='STFC-OTC'"
-    echo "export FQDN='op-otc-stfc.stfc-hn.com'"
+    echo "export FQDN='op-otc-stfc.rhea-hn.com'"
     echo "export ZONE_FQDN='onezone-stfc.rhea-hn.com'"
     mkdir -p /opt/oneprovider/persistence
     mkdir -p /opt/oneprovider/storage

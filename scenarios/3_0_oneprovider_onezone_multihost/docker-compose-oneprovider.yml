@@ -13,9 +13,9 @@ services:
         # data persistence
         - "/opt/oneprovider/storage:/volumes/storage"
         # Server SSL certificates
-        - "/etc/letsencrypt/live/${FQDN}/privkey.pem:/etc/op_panel/certs/web_key.pem"
-        - "/etc/letsencrypt/live/${FQDN}/cert.pem:/etc/op_panel/certs/web_cert.pem"
-        - "/etc/letsencrypt/live/${FQDN}/chain.pem:/etc/op_panel/certs/web_chain.pem"
+        #- "/etc/letsencrypt/live/${FQDN}/privkey.pem:/etc/op_panel/certs/web_key.pem"
+        #- "/etc/letsencrypt/live/${FQDN}/cert.pem:/etc/op_panel/certs/web_cert.pem"
+        #- "/etc/letsencrypt/live/${FQDN}/chain.pem:/etc/op_panel/certs/web_chain.pem"
     ports:
       - "80:80"
       - "443:443"
@@ -25,6 +25,9 @@ services:
       #ONEPANEL_DEBUG_MODE: "true" # prevents container exit on configuration error
       ONEPANEL_BATCH_MODE: "true"
       ONEPANEL_LOG_LEVEL: "none" # prints logs to stdout (possible values: none, debug, info, error), by default set to info
+      ONEPANEL_GENERATE_TEST_WEB_CERT: "true"  # default: false
+      ONEPANEL_GENERATED_CERT_DOMAIN: "node1.oneprovider"  # default: ""
+      ONEPANEL_TRUST_TEST_CA: "true"  # default: false
       ONEPROVIDER_CONFIG: |
         cluster:
           domainName: "oneprovider."
