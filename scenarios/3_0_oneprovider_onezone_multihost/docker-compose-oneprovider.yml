@@ -13,9 +13,9 @@ services:
         # data persistence
         - "/opt/oneprovider/storage:/volumes/storage"
         # Server SSL certificates
-        - "/etc/letsencrypt/live/${FQDN}/privkey.pem:/etc/op_panel/certs/web_key.pem"
-        - "/etc/letsencrypt/live/${FQDN}/cert.pem:/etc/op_panel/certs/web_cert.pem"
-        - "/etc/letsencrypt/live/${FQDN}/chain.pem:/etc/op_panel/certs/web_chain.pem"
+        - "/etc/letsencrypt/live/hn.nuv.la/privkey.pem:/etc/op_panel/certs/web_key.pem"
+        - "/etc/letsencrypt/live/hn.nuv.la/cert.pem:/etc/op_panel/certs/web_cert.pem"
+        - "/etc/letsencrypt/live/hn.nuv.la/chain.pem:/etc/op_panel/certs/web_chain.pem"
     ports:
       - "80:80"
       - "443:443"
@@ -51,8 +51,8 @@ services:
           subdomainDelegation: false
           domain: "${FQDN}" # OR IP ADDRESS
           adminEmail: "bkryza@gmail.com"
-          geoLatitude: ${GEO_LATITUDE}
-          geoLongitude: ${GEO_LONGITUDE}
+          geoLatitude: "${GEO_LATITUDE}"
+          geoLongitude: "${GEO_LONGITUDE}"
         onezone:
           domainName: "${ZONE_FQDN}" # OR IP ADDRESS
         onepanel:
